@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 Skin Type Accuracy Plot</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        svg text {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="820" height="320"></svg>
+
+    <script>
+        const data = [
+            { label: "T1-3", train: [1, 1, 1, 0, 0, 0], test1: 46.0, test2: null, annotation: "Light Skin Only" },
+            { label: "T1-4", train: [1, 1, 1, 1, 0, 0], test1: 47.3, test2: null, annotation: null },
+            { label: "T1-5", train: [1, 1, 1, 1, 1, 0], test1: 46.6, test2: null, annotation: null },
+            { label: "T1-6", train: [1, 1, 1, 1, 1, 1], test1: 45.9, test2: 45.5, annotation: "All Skin Types" },
+            { label: "T2-6", train: [0, 1, 1, 1, 1, 1], test1: null, test2: 48.1, annotation: null },
+            { label: "T3-6", train: [0, 0, 1, 1, 1, 1], test1: null, test2: 47.2, annotation: null },
+            { label: "T4-6", train: [0, 0, 0, 1, 1, 1], test1: null, test2: 47.0, annotation: "Dark Skin Only" },
+        ];
+
+        const skinColors = ["#E5C3A8", "#d1a88c", "#b07a6a", "#9c6b5d", "#7a4d3b", "#4a2a1e"];
+        const margin = { top: 50, right: 50, bottom: 130, left: 60 };
+        const width = 820 - margin.left - margin.right;
+        const height = 320 - margin.top - margin.bottom;
+        const boxSize = 16;
+
+        const svg = d3.select("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const xScale = d3.scalePoint()
+            .domain(data.map(d => d.label))
+            .range([60, width - 90]);
+
+        const yScale = d3.scaleLinear()
+            .domain([42.5, 51])
+            .range([height, 0]);
+
+        function drawTrainingMarkers() {
+            data.forEach((d, i) => {
+                const activeColors = d.train.map((value, j) => value ? skinColors[j] : "#ddd");
+                const offset = (3 * boxSize) / 2;
+                const x = xScale(d.label) - offset;
+
+                activeColors.forEach((color, j) => {
+                    const rectX = x + (j % 3) * boxSize;
+                    const rectY = j < 3 ? height - 26 : height - 10;
+
+                    // training marker with stacked squares representing the skin types
+                    svg.append("rect")
+                        .attr("x", rectX)
+                        .attr("y", rectY)
+                        .attr("width", boxSize)
+                        .attr("height", boxSize)
+                        .attr("fill", color);
+
+                    // text label representing the skin type number
+                    svg.append("text")
+                        .attr("x", rectX + boxSize / 2)
+                        .attr("y", rectY + boxSize / 2 + 1.5)
+                        .attr("text-anchor", "middle")
+                        .attr("dominant-baseline", "middle")
+                        .style("font-size", "14px")
+                        .attr("fill", "#fff")
+                        .text(j + 1);
+                });
+            });
+        }
+
+        function drawAnnotations() {
+            svg.selectAll(".annotation")
+                .data(data.filter(d => d.annotation !== null))
+                .enter().append("text")
+                .attr("x", d => xScale(d.label))
+                .attr("y", height + 25)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .text(d => d.annotation);
+        }
+
+        function drawAccuracyLines() {
+            const line1 = d3.line()
+                .x(d => xScale(d.label))
+                .y(d => d.test1 !== null ? yScale(d.test1) : null)
+                .defined(d => d.test1 !== null);
+
+            const line2 = d3.line()
+                .x(d => xScale(d.label))
+                .y(d => d.test2 !== null ? yScale(d.test2) : null)
+                .defined(d => d.test2 !== null);
+
+            svg.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", skinColors[1])
+                .attr("stroke-width", 2)
+                .attr("d", line1);
+
+            svg.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", skinColors[4])
+                .attr("stroke-width", 2)
+                .attr("d", line2);
+        }
+
+        function drawAccuracyPoints() {
+            svg.selectAll(".point1")
+                .data(data.filter(d => d.test1 !== null))
+                .enter().append("circle")
+                .attr("cx", d => xScale(d.label))
+                .attr("cy", d => yScale(d.test1))
+                .attr("r", 5)
+                .attr("fill", skinColors[1]);
+
+            svg.selectAll(".point1-label")
+                .data(data.filter(d => d.test1 !== null))
+                .enter().append("text")
+                .attr("x", d => xScale(d.label))
+                .attr("y", d => yScale(d.test1) - 10)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .text(d => `${d.test1}% `);
+
+            svg.selectAll(".point2")
+                .data(data.filter(d => d.test2 !== null))
+                .enter().append("circle")
+                .attr("cx", d => xScale(d.label))
+                .attr("cy", d => yScale(d.test2))
+                .attr("r", 5)
+                .attr("fill", skinColors[4]);
+
+            svg.selectAll(".point2-label")
+                .data(data.filter(d => d.test2 !== null))
+                .enter().append("text")
+                .attr("x", d => xScale(d.label))
+                .attr("y", d => yScale(d.test2) + 20)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .text(d => `${d.test2}%`);
+        }
+
+        function drawLegends() {
+            const legendX1 = xScale(data[1].label);
+            const legendX2 = xScale(data[data.length - 3].label);
+            const legendY1 = 0;
+            const legendY2 = 0;
+
+            svg.append("line")
+                .attr("x1", legendX1 - 35)
+                .attr("y1", legendY1)
+                .attr("x2", legendX1 - 5)
+                .attr("y2", legendY1)
+                .attr("stroke", skinColors[1])
+                .attr("stroke-width", 2);
+
+            svg.append("circle")
+                .attr("cx", legendX1 - 20)
+                .attr("cy", legendY1)
+                .attr("r", 5)
+                .attr("fill", skinColors[1]);
+
+            svg.append("text")
+                .attr("x", legendX1)
+                .attr("y", legendY1 + 5)
+                .attr("text-anchor", "start")
+                .style("font-size", "18px")
+                .text("Testing Accuracy");
+
+            svg.append("text")
+                .attr("x", legendX1 - 15)
+                .attr("y", legendY1 + 25)
+                .attr("text-anchor", "start")
+                .style("font-size", "16px")
+                .text("Light Skin");
+
+            const lightSkinColors = skinColors.slice(0, 3).filter((_, i) => data[0].train[i] === 1);
+            lightSkinColors.forEach((color, i) => {
+                svg.append("rect")
+                    .attr("x", legendX1 + 60 + i * 16)
+                    .attr("y", legendY1 + 12)
+                    .attr("width", 16)
+                    .attr("height", 16)
+                    .attr("fill", color);
+
+                svg.append("text")
+                    .attr("x", legendX1 + 60 + i * 16 + 8)
+                    .attr("y", legendY1 + 12 + 13.5)
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "14px")
+                    .attr("fill", "#fff")
+                    .text(i + 1);
+            });
+
+            svg.append("line")
+                .attr("x1", legendX2 - 35)
+                .attr("y1", legendY2)
+                .attr("x2", legendX2 - 5)
+                .attr("y2", legendY2)
+                .attr("stroke", skinColors[4])
+                .attr("stroke-width", 2);
+
+            svg.append("circle")
+                .attr("cx", legendX2 - 20)
+                .attr("cy", legendY2)
+                .attr("r", 5)
+                .attr("fill", skinColors[4]);
+
+            svg.append("text")
+                .attr("x", legendX2)
+                .attr("y", legendY2 + 5)
+                .attr("text-anchor", "start")
+                .style("font-size", "18px")
+                .text("Testing Accuracy");
+
+            svg.append("text")
+                .attr("x", legendX2 - 15)
+                .attr("y", legendY2 + 25)
+                .attr("text-anchor", "start")
+                .style("font-size", "16px")
+                .text("Dark Skin");
+
+            const darkSkinColors = skinColors.slice(3, 6).filter((_, i) => data[data.length - 1].train[i + 3] === 1);
+            darkSkinColors.forEach((color, i) => {
+                svg.append("rect")
+                    .attr("x", legendX2 + 60 + i * boxSize)
+                    .attr("y", legendY2 + 12)
+                    .attr("width", 16)
+                    .attr("height", 16)
+                    .attr("fill", color);
+
+                svg.append("text")
+                    .attr("x", legendX2 + 60 + i * boxSize + 8)
+                    .attr("y", legendY2 + 12 + 13.5)
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "14px")
+                    .attr("fill", "#fff")
+                    .text(i + 4);
+            });
+        }
+
+        drawTrainingMarkers();
+        drawAnnotations();
+        drawAccuracyLines();
+        drawAccuracyPoints();
+        drawLegends();
+    </script>
+</body>
+
+</html>

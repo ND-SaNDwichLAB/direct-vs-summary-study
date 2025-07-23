@@ -1,0 +1,16 @@
+Participant ID	TensorFlow	D3.js	Chrome Extension
+1	Familiar with	Familiar with	Very Skilled
+2	Learned but unfamiliar with	Never used	Never used
+3	Never used	Never used	Never used
+4	Learned but unfamiliar with	Learned but unfamiliar with	Learned but unfamiliar with
+5	Learned but unfamiliar with	Learned but unfamiliar with	Never used
+6	Learned but unfamiliar with	Never used	Familiar with
+7	Never used	Never used	Learned but unfamiliar with
+8	Never used	Never used	Familiar with
+9	Learned but unfamiliar with	Never used	Never used
+10	Familiar with	Learned but unfamiliar with	Never used
+11	Familiar with	Never used	Learned but unfamiliar with
+12	Learned but unfamiliar with	Never used	Learned but unfamiliar with
+13	Learned but unfamiliar with	Learned but unfamiliar with	Learned but unfamiliar with
+14	Learned but unfamiliar with	Never used	Learned but unfamiliar with
+15	Learned but unfamiliar with	Learned but unfamiliar with	Learned but unfamiliar with

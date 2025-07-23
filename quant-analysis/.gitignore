@@ -1,0 +1,7 @@
+**/.idea/
+**/config.*
+transcription/audio/*
+transcription/transcript/*
+.vscode/
+.venv/
+**/.DS_Store

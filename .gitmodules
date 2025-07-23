@@ -1,0 +1,3 @@
+[submodule "pasta-plugin"]
+	path = pasta-plugin
+	url = https://github.com/TTangNingzhi/PASTA

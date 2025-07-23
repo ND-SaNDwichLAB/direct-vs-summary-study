@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "GPT Text Translator (Buggy)",
+    "version": "0.0.1",
+    "description": "Easily translate text to English using GPT's advanced language model.",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "https://api.openai.com/"
+    ],
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    }
+}

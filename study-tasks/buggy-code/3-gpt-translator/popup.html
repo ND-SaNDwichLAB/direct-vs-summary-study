@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Text Translator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h2>Translate with GPT</h2>
+    <textarea id="textInput" placeholder="Type or paste text here..." rows="4"
+        style="width: 100%; box-sizing: border-box;"></textarea>
+
+    <!-- Language selection dropdown -->
+    <select id="languageSelect" style="width: 100%; margin-top: 10px;">
+        <option value="en">English</option>
+        <option value="custom">Custom Language</option>
+    </select>
+
+    <!-- Custom language input -->
+    <input id="customLanguageInput" placeholder="Enter custom language"
+        style="width: 100%; margin-top: 10px; display: none; box-sizing: border-box;">
+
+    <button id="translateButton" style="width: 100%; margin-top: 10px;">Translate Now</button>
+    <div id="translatedText" style="margin-top: 10px; color: #555;">Your translation will appear here...</div>
+    <button id="copyButton" style="width: 100%; margin-top: 10px;">Copy Translated Text</button>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
