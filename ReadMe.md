@@ -5,6 +5,8 @@ This repository contains the replication package for the paper:
 **Exploring Direct Instruction and Summary-Mediated Prompting in LLM-Assisted Code Modification**  
 *VL/HCC 2025 — IEEE Symposium on Visual Languages and Human-Centric Computing*
 
+## Package Structure
+
 The package is organized as follows:
 
 - **`pasta-plugin/`**  
@@ -35,6 +37,8 @@ The package is organized as follows:
   - `ground-truth/`: Reference solutions.
   - `task-descriptions/`: Task instructions and related images.
 
+## Citation & Contact
+
 If you use or reference this package, please cite our paper:
 ```bibtex
 @inproceedings{tang2025exploring,
@@ -47,3 +51,7 @@ If you use or reference this package, please cite our paper:
 ```
 
 For questions or collaboration inquiries, please contact [Ningzhi Tang](https://www.nztang.com/) at ntang@nd.edu or ningzhitang2001@gmail.com.
+
+## Acknowledgments
+
+This research was supported in part by an AnalytiXIN Faculty Fellowship, an NVIDIA Academic Hardware Grant, a Google Cloud Research Credit Award, a Google Research Scholar Award, and NSF grants CCF-2211428, CCF-2315887, and CCF-2100035. Any opinions, findings, or recommendations expressed here are those of the authors and do not necessarily reflect the views of the sponsors.
