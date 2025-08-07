@@ -3,22 +3,26 @@
 This repository contains the replication package for the paper:
 
 **Exploring Direct Instruction and Summary-Mediated Prompting in LLM-Assisted Code Modification**  
-*VL/HCC 2025 — IEEE Symposium on Visual Languages and Human-Centric Computing*
+_VL/HCC 2025 — IEEE Symposium on Visual Languages and Human-Centric Computing_
+
+The arXiv preprint is available [here](https://www.arxiv.org/abs/2508.01523).
 
 ## Package Structure
 
 The package is organized as follows:
 
 - **`pasta-plugin/`**  
-  Source code and resources for the IntelliJ plugin PASTA used in the study.  
+  Source code and resources for the IntelliJ plugin PASTA used in the study. The plugin is also available on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/28121-pasta-ai).
 
 - **`qual-analysis/`**  
-  Materials for qualitative analysis.  
+  Materials for qualitative analysis.
+
   - `codebook.pdf`: Codebook for interview analysis.
   - `coded_quotes.csv`: Anonymized, coded interview segments.
 
 - **`quant-analysis/`**  
-  Materials for quantitative analysis.  
+  Materials for quantitative analysis.
+
   - `requirements.txt`: Python dependencies. After installing them, all Jupyter notebooks can be run successfully.
   - `analysis/`: Jupyter notebooks, data files, and result figures for quantitative analysis.
     - `data/`: Contains task outcomes, prompt strategy selections, and questionnaire responses (e.g., NASA-TLX, perceived utility, and self-reported experience).
@@ -32,7 +36,7 @@ The package is organized as follows:
   Study protocol documents in PDF format, including all questionnaires and a facilitator-used study procedure (e.g., introduction for PASTA, scripts for semi-structured interviews).
 
 - **`study-tasks/`**  
-  Programming tasks used in the study.  
+  Programming tasks used in the study.
   - `buggy-code/`: Initial code given to participants.
   - `ground-truth/`: Reference solutions.
   - `task-descriptions/`: Task instructions and related images.
@@ -40,6 +44,7 @@ The package is organized as follows:
 ## Citation & Contact
 
 If you use or reference this package, please cite our paper:
+
 ```bibtex
 @inproceedings{tang2025exploring,
   title={Exploring Direct Instruction and Summary-Mediated Prompting in LLM-Assisted Code Modification},
